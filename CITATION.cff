@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below, alongside the associated manuscript."
+title: "lbraziliensis_SuSL_sWGA: analysis scripts for SuSL-seq vs SWGA-seq comparison in Leishmania braziliensis"
+type: software
+authors:
+  - family-names: Monsieurs
+    given-names: Pieter
+    affiliation: Institute of Tropical Medicine, Antwerp, Belgium
+    email: pmonsieurs@itg.be
+  - family-names: Cruz Saldarriaga
+    given-names: Maria Edelmira
+  - family-names: Aroni-Soto
+    given-names: Allison
+  - family-names: Sernaque Palomino
+    given-names: Maria de los Angeles
+  - family-names: Pinedo Bardales
+    given-names: Maria
+  - family-names: Arevalo
+    given-names: Jorge
+  - family-names: Van den Broeck
+    given-names: Frederik
+  - family-names: Heeren
+    given-names: Senne
+  - family-names: Dujardin
+    given-names: Jean-Claude
+    affiliation: Institute of Tropical Medicine, Antwerp, Belgium
+    email: jcdujardin@itg.be
+  - family-names: Domagalska
+    given-names: Malgorzata Anna
+    affiliation: Institute of Tropical Medicine, Antwerp, Belgium
+    email: mdomagalska@itg.be
+repository-code: "https://github.com/pietermonsieurs/lbraziliensis_SuSL_sWGA"
+license: MIT
+# license: change to GPL-3.0 (or whichever you pick) if MIT isn't right - must
+# match the actual LICENSE file in the repo root, and the README's "License"
+# section in the companion Zenodo data deposit.
+keywords:
+  - Leishmania braziliensis
+  - SureSelect
+  - SuSL-seq
+  - selective whole genome amplification
+  - SWGA
+  - targeted sequencing
+  - clinical samples
