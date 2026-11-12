@@ -51,8 +51,9 @@ for (cov_file in cov_files) {
   print(name)
   rownames = c(rownames, name)
   
-  row_to_add = c(name, gene, type)
-
+  # row_to_add = c(name, gene, type)
+  row_to_add = c(name, type)
+  
   for (i in 1:nrow(drug_data)) {
     ## extract the information from the drug resistance file
     chrom_short = drug_data[i,]$chrom
@@ -81,7 +82,8 @@ for (cov_file in cov_files) {
   
   if (first_row == 1) {
     perc_covered_data = as.data.frame(t(as.data.frame(row_to_add)))
-    colnames(perc_covered_data) = c('name', 'gene', 'protocol', colnames)
+    # colnames(perc_covered_data) = c('name', 'gene', 'protocol', colnames)
+    colnames(perc_covered_data) = c('name', 'protocol', colnames)
     first_row = 0
   }
   else{
@@ -94,13 +96,14 @@ head(perc_covered_data)
 dim(perc_covered_data)
 rownames(perc_covered_data)
 
+
 ## keep the perc_covered_data as main matrix and do 
 ## subsequent filtering on copy plot_data. Remove the gene
 ## column, and replace the type and protocol name by changing
 ## the rownames. Also, convert all "strings" to numeric values
 plot_data = perc_covered_data
 plot_data = plot_data[order(plot_data$protocol, plot_data$name),]
-plot_data = plot_data[, -2]
+# plot_data = plot_data[, -2]
 rownames(plot_data) = paste0(plot_data$name, '_', plot_data$protocol)
 plot_data = plot_data[,-c(1,2)]
 plot_data[] <- lapply(plot_data, as.numeric)
@@ -110,6 +113,11 @@ head(plot_data)
 plot_data = plot_data[-grep("Mix", rownames(plot_data)),]
 plot_data
 # plot_data = plot_data[-grep("LbrM.", rownames(plot_data)),]
+
+## remove sample LFA-CU-104
+plot_data = plot_data[grep("LFA-CU-104", rownames(plot_data), invert = TRUE), ]
+
+
 
 ## add annotation data to visualize the genes based 
 annotation_data = as.data.frame(drug_data$category)

@@ -13,6 +13,11 @@ for (chr in chroms) {
   
   ## read in the fbk values
   fbk <- read.table(paste0(src_dir, 'pcadmix.', chr, '.fbk.txt'))
+  
+  ## remove the sample LFA-CU-104
+  fbk <- fbk[grep("LFA-CU-104", fbk$V1, invert = TRUE), ]
+  fbk
+  
   windows <- colnames(fbk)[-c(1,2)]
   samples <- unique(gsub('_A||_B', '', fbk$V1))
   # samples2 <- c(samples2[c(33,34)], samples2[-c(33,34)])

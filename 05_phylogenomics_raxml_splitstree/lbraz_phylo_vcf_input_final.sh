@@ -58,7 +58,44 @@ zcat phylo.biallelic.complete.vcf.gz | wc ## count = 77982 --> in line with prev
 
 
 
+## clean up the the vcf file by removing the samples which are not Lbraz genomes, so
+## including sample LFA-CU-104
+cd /user/antwerpen/205/vsc20587/scratch/leishmania_susl/results/lbraz_susl_swga/phylo
+vcf=phylo.SuSL.filtered_stringent.renamed2.fraction0.95.snps.vcf.gz
+vcf_out=phylo.SuSL.filtered_stringent.renamed2.fraction0.95.snps.lbraz_only.vcf.gz
 
+## check number of SNPs
+zcat $vcf | grep -v "^#" | wc  ## 2,222,143
+
+## check the current smaple names
+bcftools query -l $vcf        # check how LFA-CU-104 appears here
+
+## create file with samples that should be removed
+cat > remove_samples.txt <<'EOF'
+Lnaiffi_ERR205764
+SRR1657912
+Lguyanensis_SRR1662195
+Lshawi_SRR1657909
+Lpanamensis_SRR1662198
+PER182A1
+Lb7616
+LFA-CU-104_SuSL_none
+EOF
+
+cat remove_samples.txt
+
+
+## remove the samples from the vcf file, and immediately filter the vcf file to 
+## remove the SNPs that now have become invariant after removing outlier groups
+bcftools view -S ^remove_samples.txt $vcf -Ou \
+  | bcftools +fill-tags -Ou -- -t AC,AN \
+  | bcftools view --min-alleles 2 --max-alleles 2 -e 'AC==0 || AC==AN' \
+        -Oz -o $vcf_out
+
+## count the number of SNPs in the new vcf file
+echo "samples:   $(bcftools query -l ${vcf} | wc -l)"
+echo "SNPs before: $(bcftools view -H ${vcf} | wc -l)"
+echo "SNPs after:  $(bcftools view -H ${vcf_out} | wc -l)" # 424,348
 
 
 
